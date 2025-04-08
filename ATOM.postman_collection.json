@@ -1,0 +1,339 @@
+{
+	"info": {
+		"_postman_id": "300b06c4-67d7-4b29-8a71-68d06f651573",
+		"name": "ATOM",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27887969"
+	},
+	"item": [
+		{
+			"name": "CREATE-TASK",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODk3ZGE2My03MTM1LTQwMGUtOWEyOC1kNDI5ZjQzZTM3N2QiLCJpYXQiOjE3NDQwODAwOTAsImV4cCI6MTc0NDA4MDY5MH0.glzrkJu0FBZdyKgD5ZlukRNGqOFgZ_IC3E5o05F8egA",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"taskName\": \"Tarea de Prueba\",\r\n    \"taskDescription\": \"Esta es la tarea de prueba a registrar\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/users/:userId/tasks",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"users",
+						":userId",
+						"tasks"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "0897da63-7135-400e-9a28-d429f43e377d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "CREATE-USER",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user@atom.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/auth/register",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"auth",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "USER-LOGIN",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"alekzander85@hotmail.es\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/auth/login",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"auth",
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LIST-TASK-BY-USER",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIwODk3ZGE2My03MTM1LTQwMGUtOWEyOC1kNDI5ZjQzZTM3N2QiLCJpYXQiOjE3NDQwODAxNzksImV4cCI6MTc0NDA4MDc3OX0.YenF51J8ODqi0ZCnGQ3DEhPdmUYQ-kQTiIO9ZgUB9w8",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/users/:userId/tasks",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"users",
+						":userId",
+						"tasks"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "0897da63-7135-400e-9a28-d429f43e377d"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "UPDATE -USER-TASK",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"taskId\": \"dc4c2de5-68c7-475e-8628-a00e8c4ea5\",\r\n    \"taskName\": \"Acomodar la ropa del bebe\",\r\n    \"taskDescription\": \"cualquiera de estos\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/users/:userId/tasks",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"users",
+						":userId",
+						"tasks"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "e5daccf0-e265-4dd8-90da-efb7f792c143"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "REMOVE-USER-TASK",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiIzOWEzMmU3Ni0zNGVhLTQ4NmMtYjBmZS0xOTRlMGU0NWM4NTkiLCJpYXQiOjE3NDQwMzk5MjYsImV4cCI6MTc0NDA0MDUyNn0.6AIdU_8JpmR4bwg0Uucel6x_Jh1R0TiURFfxZDVIxJo",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/users/:userId/tasks/:taskId",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"users",
+						":userId",
+						"tasks",
+						":taskId"
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "39a32e76-34ea-486c-b0fe-194e0e45c859"
+						},
+						{
+							"key": "taskId",
+							"value": "bf353486-8a66-405e-ab96-3f53c232076e"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET USER TASKS BY MATCH",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/users/:userId/tasks/match?value=dsd",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"users",
+						":userId",
+						"tasks",
+						"match"
+					],
+					"query": [
+						{
+							"key": "value",
+							"value": "dsd"
+						}
+					],
+					"variable": [
+						{
+							"key": "userId",
+							"value": "f6b06dcd-daea-4f6f-8a4e-97d08d0f4872"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "LIST USERS",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/users/all",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"users",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PURGE USER",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"email\": \"user@atom.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://atomtodochallengeservice.onrender.com/atom/v1/users/purge",
+					"protocol": "https",
+					"host": [
+						"atomtodochallengeservice",
+						"onrender",
+						"com"
+					],
+					"path": [
+						"atom",
+						"v1",
+						"users",
+						"purge"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
