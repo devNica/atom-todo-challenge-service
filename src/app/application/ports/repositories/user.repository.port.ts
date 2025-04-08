@@ -5,4 +5,6 @@ export interface UserRepositoryPort {
     save: (data: Required<UserRaw>) => Promise<void>
     findByEmail: (email: string) => Promise<UserModel>
     findById: (userId: string) => Promise<UserModel>
+    fetchAll: () => Promise<UserModel[]>
+    deleteById: (userId: string)  => Promise<UserModel[]>
 }

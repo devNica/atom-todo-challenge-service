@@ -14,4 +14,5 @@ export interface TaskRepositoryPort {
         ownerId: string
     ) => Promise<void>
     fetchByMatch: (value: string, ownerId: string) => Promise<TaskModel[]>
+    deleteAllTasks: (ownerId: string) => Promise<void>
 }

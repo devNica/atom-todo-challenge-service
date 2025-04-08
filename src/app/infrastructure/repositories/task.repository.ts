@@ -23,7 +23,28 @@ class TaskRepository implements TaskRepositoryPort {
     private readonly storeName = STORAGES.tasks
     private readonly maxStoreSize = 10
 
-    constructor(private readonly cacheSrv: CacheServicePort<TaskModel>) {}
+    constructor(private readonly cacheSrv: CacheServicePort<TaskModel>) { }
+
+
+    async deleteAllTasks(ownerId: string): Promise<void> {
+        try {
+
+            // Recuperar las tareas de terceros
+            const thirdPartyTask =
+                await this.cacheSrv.getAndFilterStoreByParams({
+                    keyToFilter: 'ownerId', // buscar por nombre de la tarea
+                    storeName: this.storeName, // buscar en el store de las tareas
+                    valueToFilter: ownerId,
+                    type: 0, // los resultados deben excluir el valor si lo encuentra
+                })
+
+            // Persistir los cambios se reescribe el store
+            await this.cacheSrv.rewriteStoreByName(this.storeName, thirdPartyTask)
+
+        } catch (error) {
+            throw new RepositoryErrorPresenter(String(error), 'TaskRepository')
+        }
+    }
 
     async fetchByMatch(value: string, ownerId: string): Promise<TaskModel[]> {
         try {

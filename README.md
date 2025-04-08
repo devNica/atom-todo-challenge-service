@@ -11,6 +11,9 @@
     📑 Logs de ejecucion con Winston
     🏗️ Estructurado por Arq Hexagonal + DDD
 
+    🦸 Cantidad Maxima de Usuarios Registrados Permitido: 15
+    📑 Cantidad Maxima de Tareas por Usuario: 10
+
 
 # 🚀 Instalacion y Uso
 
@@ -25,6 +28,13 @@
 ## 3. Ejecutar en Modo Desarrollo
 
 ## `npm run dev`
+
+`` 
+    El servicio corre por defecto en el puerto 9000,
+    Si desea ejecutarlo en otro puerto agregue un archivo 
+    de variables de entorno y  defina SERVER_PORT y su 
+    valor  
+``
 
 ## 4. Aplicar configuraciones de Eslint y Prettier
 
@@ -44,6 +54,12 @@
 
 ```http
 POST /atom/v1/auth/register
+
+Códigos de estado:
+
+201 Created: Recurso creado exitosamente.
+400 Bad Request: Error en los parametros.
+409 Conflict: Errores de Restriccion.
 ```
 
 | Parameter | Type     | Required | Description                      |
@@ -72,6 +88,10 @@ POST /atom/v1/auth/register
 
 ```http
 POST /atom/v1/auth/login
+
+200 Success: Peticion realizada exitosamente.
+400 Bad Request: Error en los parametros.
+409 Conflict: Errores de Restriccion.
 ```
 
 | Parameter | Type     | Required | Description                   |
@@ -100,6 +120,14 @@ POST /atom/v1/auth/login
 
 ```http
 POST /atom/v1/users/:userId/tasks
+Authorization: Bearer e8by...
+
+Códigos de estado:
+
+201 Created: Recurso creado exitosamente.
+400 Bad Request: Error en los parametros.
+401 Unauthorized: Autenticación fallida token no encontrado.
+403 Forbidden: Autenticación fallida token inválido.
 ```
 
 | Parameter         | Type     | Required | Description                           |
@@ -132,6 +160,14 @@ POST /atom/v1/users/:userId/tasks
 
 ```http
 GET /atom/v1/users/:userId/tasks
+Authorization: Bearer e8by...
+
+Códigos de estado:
+
+200 Success: Peticion realizada con exito.
+400 Bad Request: Error en los parametros.
+401 Unauthorized: Autenticación fallida token no encontrado.
+403 Forbidden: Autenticación fallida token inválido.
 ```
 
 | Parameter | Type     | Required | Description                                                   |
@@ -164,6 +200,14 @@ GET /atom/v1/users/:userId/tasks
 
 ```http
 PUT /atom/v1/users/:userId/tasks
+Authorization: Bearer e8by...
+
+Códigos de estado:
+
+200 Success: Actualizacion realizada con exito.
+400 Bad Request: Error en los parametros.
+401 Unauthorized: Autenticación fallida token no encontrado.
+403 Forbidden: Autenticación fallida token inválido.
 ```
 
 | Parameter         | Type     | Required | Description                                                   |
@@ -198,6 +242,14 @@ PUT /atom/v1/users/:userId/tasks
 
 ```http
 PATCH /atom/v1/users/:userId/tasks
+Authorization: Bearer e8by...
+
+Códigos de estado:
+
+200 Success: Actualizacion parcial realizada con exito.
+400 Bad Request: Error en los parametros.
+401 Unauthorized: Autenticación fallida token no encontrado.
+403 Forbidden: Autenticación fallida token inválido.
 ```
 
 | Parameter | Type      | Required | Description                                                   |
@@ -231,6 +283,14 @@ PATCH /atom/v1/users/:userId/tasks
 
 ```http
 DELETE /atom/v1/users/:userId/tasks/:taskId
+Authorization: Bearer e8by...
+
+Códigos de estado:
+
+200 Success: Eliminacion realizada con exito.
+400 Bad Request: Error en los parametros.
+401 Unauthorized: Autenticación fallida token no encontrado.
+403 Forbidden: Autenticación fallida token inválido.
 ```
 
 | Parameter | Type     | Required | Description                                                   |
@@ -276,6 +336,14 @@ DELETE /atom/v1/users/:userId/tasks/:taskId
 
 ```http
 GET /atom/v1/users/:userId/tasks/match
+Authorization: Bearer e8by...
+
+Códigos de estado:
+
+200 Success: Peticion realizada con exito.
+400 Bad Request: Error en los parametros.
+401 Unauthorized: Autenticación fallida token no encontrado.
+403 Forbidden: Autenticación fallida token inválido.
 ```
 
 | Parameter | Type     | Required | Description                                                   |
@@ -315,14 +383,94 @@ GET /atom/v1/users/:userId/tasks/match
 
     }
 
+
+## Endpoints de Mantenimiento
+
+### Request
+
+```http
+GET /atom/v1/users/all
+
+Códigos de estado:
+
+200 Success: Peticion realizada con exito.
+```
+
+#### `Nota: Se retorna la lista de los usuarios registrados`
+
+### Response
+
+    HTTP/1.1 200 OK
+    Content-Language: en
+    Status: 200 OK
+    Connection: keep-alive
+    Keep-Alive: timeout-5
+    Content-Type: application/json
+
+    {
+        "message": 'registros recuperados existosamente!',
+        "meta": [
+            {
+                "email": "user@atom.com",
+                "createdAt": "07/04/2025",
+            },
+            {
+                "email": "admin@atom.com",
+                "createdAt": "07/04/2025",
+            },
+        ]
+
+    }
+
+
+### Request
+
+```http
+DELETE /atom/v1/users/purge
+
+Códigos de estado:
+
+200 Success: Eliminacion realizada con exito.
+```
+| Parameter | Type     | Required | Description                                                   |
+| :-------- | :------- | :------- | :------------------------------------------------------------ |
+| `email`  | `string` | **true** | `Direccion de correo del usuario a purgar` |
+                                  
+#### `Nota: Se retorna la lista de los usuarios despues de la purga, tambien se purgan las tareas del usuario`
+
+### Response
+
+    HTTP/1.1 200 OK
+    Content-Language: en
+    Status: 200 OK
+    Connection: keep-alive
+    Keep-Alive: timeout-5
+    Content-Type: application/json
+
+    {
+        "message": 'registros recuperados existosamente!',
+        "meta": [
+            {
+                "email": "user@atom.com",
+                "createdAt": "07/04/2025",
+            },
+            {
+                "email": "admin@atom.com",
+                "createdAt": "07/04/2025",
+            },
+        ]
+
+    }
+
 # 📂 Estructura del Proyecto
 
-        ── .env
+        ├── .env
         ├── .eslintignore
         ├── .eslintrc
         ├── .gitignore
         ├── .prettierignore
         ├── .prettierrc
+        ├── LICENSE
         ├── package-lock.json
         ├── package.json
         ├── README.md
@@ -340,6 +488,9 @@ GET /atom/v1/users/:userId/tasks/match
         |   |   |   |   |   ├── remove-user-task.controller.ts
         |   |   |   |   |   ├── toggle-status.controller.ts
         |   |   |   |   |   ├── update-user-task.controller.ts
+        |   |   |   |   ├── users/
+        |   |   |   |   |   ├── delete.controller.ts
+        |   |   |   |   |   ├── list.controller.ts
         |   |   |   ├── ports/
         |   |   |   |   ├── repositories/
         |   |   |   |   |   ├── task.repository.port.ts
@@ -347,9 +498,11 @@ GET /atom/v1/users/:userId/tasks/match
         |   |   |   |   ├── usecases/
         |   |   |   |   |   ├── auth.usecase.port.ts
         |   |   |   |   |   ├── task.usecase.port.ts
+        |   |   |   |   |   ├── user.usecase.port.ts
         |   |   |   ├── schemas/
         |   |   |   |   ├── auth.schemas.ts
         |   |   |   |   ├── task.schemas.ts
+        |   |   |   |   ├── user.schamas.ts
         |   |   |   ├── usecases/
         |   |   |   |   ├── task/
         |   |   |   |   |   ├── create.usecase.ts
@@ -360,6 +513,8 @@ GET /atom/v1/users/:userId/tasks/match
         |   |   |   |   |   ├── update-user-task.usecase.ts
         |   |   |   |   ├── users/
         |   |   |   |   |   ├── create.usecase.ts
+        |   |   |   |   |   ├── delete.usecase.ts
+        |   |   |   |   |   ├── list.usecase.ts
         |   |   |   |   |   ├── login.usecase.ts
         |   |   ├── domain/
         |   |   |   ├── entities/
@@ -376,6 +531,8 @@ GET /atom/v1/users/:userId/tasks/match
         |   |   |   |   ├── update-user-task.factory.ts
         |   |   |   ├── users/
         |   |   |   |   ├── create.factory.ts
+        |   |   |   |   ├── delete.factory.ts
+        |   |   |   |   ├── list.factory.ts
         |   |   |   |   ├── login.factory.ts
         |   |   ├── infrastructure/
         |   |   |   ├── repositories/
@@ -463,12 +620,6 @@ GET /atom/v1/users/:userId/tasks/match
         |   |   |   |   ├── serialized-error.ts
         |   |   |   |   ├── server.util.ts
         |   |   |   |   ├── validator.ts
-        |   |   |   ├── winston/
-        |   |   |   |   ├── config/
-        |   |   |   |   |   ├── winston-logger.config.ts
-        |   |   |   ├── winston/
-        |   |   |   |   ├── config/
-        |   |   |   ├── winston/
         |   |   |   ├── winston/
         |   |   |   |   ├── config/
         |   |   |   |   |   ├── winston-logger.config.ts

@@ -4,12 +4,15 @@ import {
     updateTaskSchema,
     updateTaskStatusSchema,
 } from '@app/application/schemas/task.schemas'
+import { removeUserSchema } from '@app/application/schemas/user.schamas'
 import { createTaskFactory } from '@app/factories/task/create.factory'
 import { getUserTaskByMatchFactory } from '@app/factories/task/get-by-match.factory'
 import { listTaskByUserFactory } from '@app/factories/task/list-by-user.factory'
 import { removeTaskUserFactory } from '@app/factories/task/remove-user-task.factory'
 import { toggleUserTaskStatusFactory } from '@app/factories/task/toggle-status.factory'
 import { updateUserTaskFactory } from '@app/factories/task/update-user-task.factory'
+import { removeUserFactory } from '@app/factories/users/delete.factory'
+import { listRegisteredUserFactory } from '@app/factories/users/list.factory'
 import { taskRequestLimit } from '@app/infrastructure/repositories/http/rate-limit'
 import { authMiddlewareFactory } from '@core/factories/auth-middleware.factory'
 import { validatorSchemaFactory } from '@core/factories/validator-schema'
@@ -27,6 +30,15 @@ userRouter.use(taskRequestLimit)
  * Si es una ruta protegida primeramente debe agregar el middleware de autenticacion
  * y posterior los demas middlewares necesarios.
  */
+userRouter.get('/all',
+    expressRouteAdapter(listRegisteredUserFactory)
+)
+
+userRouter.delete('/purge',
+    expressMiddlewareAdapter(validatorSchemaFactory(removeUserSchema)),
+    expressRouteAdapter(removeUserFactory)
+)
+
 userRouter.post(
     '/:userId/tasks',
     expressMiddlewareAdapter(authMiddlewareFactory),

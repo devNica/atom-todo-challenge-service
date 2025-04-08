@@ -19,7 +19,41 @@ class UserRepository implements UserRepositoryPort {
     private readonly storeName = STORAGES.auth
     private readonly maxStoreSize = 15
 
-    constructor(private readonly cacheSrv: CacheServicePort<UserModel>) {}
+    constructor(private readonly cacheSrv: CacheServicePort<UserModel>) { }
+
+
+    async deleteById(userId: string): Promise<UserModel[]> {
+        try {
+
+            // Recuperar las tareas de terceros
+            const newUserList =
+                await this.cacheSrv.getAndFilterStoreByParams({
+                    keyToFilter: 'userId', // buscar por nombre de la tarea
+                    storeName: this.storeName, // buscar en el store de las tareas
+                    valueToFilter: userId,
+                    type: 0, // los resultados deben excluir el valor si lo encuentra
+                })
+
+            // Persistir los cambios se reescribe el store
+            await this.cacheSrv.rewriteStoreByName(this.storeName, newUserList)
+
+            return newUserList
+
+        } catch (error) {
+            throw new RepositoryErrorPresenter(String(error), 'UserRepository')
+        }
+    }
+
+
+    async fetchAll(): Promise<UserModel[]> {
+        try {
+
+            return await this.cacheSrv.getStoreByName(this.storeName)
+
+        } catch (error) {
+            throw new RepositoryErrorPresenter(String(error), 'UserRepository')
+        }
+    }
 
     async findById(userId: string): Promise<UserModel> {
         try {
